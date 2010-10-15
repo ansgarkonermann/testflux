@@ -1,0 +1,9 @@
+
+  Library of TestNG listeners and annotations to allow easy unit testing of
+  drools rules, configuring all aspects of a test declaratively using annotations.
+
+  Replaces the common implementation inheritance idiom, where much of the test
+  support code ends up in a test superclass for convenience, with a delegation-based
+  approach.
+
+

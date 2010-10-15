@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>de.lightful.testflux</groupId>
+  <artifactId>testflux-master</artifactId>
+  <version>0.1</version>
+  <packaging>pom</packaging>
+
+  <name>testflux-master</name>
+
+  <properties>
+    <drools.group>org.drools</drools.group>
+    <drools.version>5.1.1</drools.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.testng</groupId>
+        <artifactId>testng</artifactId>
+        <version>5.14.1</version>
+        <scope>test</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>${drools.group}</groupId>
+        <artifactId>drools-compiler</artifactId>
+        <version>${drools.version}</version>
+        <scope>runtime</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>${drools.group}</groupId>
+        <artifactId>drools-api</artifactId>
+        <version>${drools.version}</version>
+        <scope>compile</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+
+  <scm>
+    <connection>scm:git:git@github.com:ansgarkonermann/testflux.git</connection>
+    <developerConnection>scm:git:git@github.com:ansgarkonermann/testflux.git</developerConnection>
+  </scm>
+
+  <distributionManagement>
+    <downloadUrl>http://lightful.de/mvnrepo/public/releases</downloadUrl>
+    <repository>
+      <uniqueVersion>false</uniqueVersion>
+      <id>de.lightful.releases</id>
+      <name>Public Release Repository on lightful.de</name>
+      <url>scp://lightful.de/mvnrepo/public/releases</url>
+      <layout>default</layout>
+    </repository>
+    <snapshotRepository>
+      <uniqueVersion>false</uniqueVersion>
+      <id>de.lightful.snapshots</id>
+      <name>Public Snapshot Repository on lightful.de</name>
+      <url>scp://lightful.de/mvnrepo/public/snapshots</url>
+      <layout>default</layout>
+    </snapshotRepository>
+  </distributionManagement>
+
+</project>

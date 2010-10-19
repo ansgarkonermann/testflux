@@ -21,7 +21,7 @@
 
   <groupId>de.lightful.testflux</groupId>
   <artifactId>testflux-drools</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <name>testflux-drools</name>
@@ -63,7 +63,7 @@
       <dependency>
         <groupId>de.lightful.testflux</groupId>
         <artifactId>testflux-master</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>0.1-SNAPSHOT</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
@@ -74,6 +74,7 @@
     <dependency>
       <groupId>org.testng</groupId>
       <artifactId>testng</artifactId>
+      <version>5.12.1</version>
     </dependency>
   </dependencies>
 

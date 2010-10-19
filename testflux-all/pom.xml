@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   ~ Copyright (c) 2010 Ansgar Konermann                                       ~
   ~                                                                           ~
@@ -16,45 +15,21 @@
   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>de.lightful.testflux</groupId>
-  <artifactId>testflux-master</artifactId>
+  <artifactId>testflux-all</artifactId>
   <version>0.1-SNAPSHOT</version>
-  <packaging>jar</packaging>
+  <packaging>pom</packaging>
 
-  <name>testflux-master</name>
-  <description>Dependency configuration for all testflux submodules</description>
+  <name>testflux-all</name>
+  <description>Parent project for all submodules of testflux.</description>
 
-  <properties>
-    <drools.group>org.drools</drools.group>
-    <drools.version>5.1.1</drools.version>
-  </properties>
-
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>org.testng</groupId>
-        <artifactId>testng</artifactId>
-        <version>5.14.1</version>
-        <scope>test</scope>
-      </dependency>
-
-      <dependency>
-        <groupId>${drools.group}</groupId>
-        <artifactId>drools-compiler</artifactId>
-        <version>${drools.version}</version>
-        <scope>runtime</scope>
-      </dependency>
-
-      <dependency>
-        <groupId>${drools.group}</groupId>
-        <artifactId>drools-api</artifactId>
-        <version>${drools.version}</version>
-        <scope>compile</scope>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
+  <modules>
+    <module>../testflux-parent</module>
+    <module>../testflux-master</module>
+    <module>../testflux-drools</module>
+  </modules>
 
 </project>

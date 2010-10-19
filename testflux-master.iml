@@ -5,6 +5,8 @@
     <output-test url="file://$MODULE_DIR$/testflux-master/target/test-classes" />
     <exclude-output />
     <content url="file://$MODULE_DIR$/testflux-master">
+      <sourceFolder url="file://$MODULE_DIR$/testflux-master/src/main/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/testflux-master/src/test/java" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/testflux-master/target" />
     </content>
     <orderEntry type="inheritedJdk" />

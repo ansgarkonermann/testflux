@@ -1,17 +1,120 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ~ Copyright (c) 2010 Ansgar Konermann                                       ~
+  ~                                                                           ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");  you      ~
+  ~ may not use this file except in compliance with the License. You may      ~
+  ~ obtain a copy of the License at                                           ~
+  ~                                                                           ~
+  ~              http://www.apache.org/licenses/LICENSE-2.0                   ~
+  ~                                                                           ~
+  ~ Unless required by  applicable law or agreed to in writing, software      ~
+  ~ distributed under  the License is distributed  on an "AS IS"  BASIS,      ~
+  ~ WITHOUT  WARRANTIES  OR  CONDITIONS  OF  ANY  KIND,   either express      ~
+  ~ or implied.  See the License for  the  specific  language  governing      ~
+  ~ permissions and limitations under the License.                            ~
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>de.lightful.testflux</groupId>
   <artifactId>testflux-parent</artifactId>
-  <version>0.1</version>
+  <version>0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>testflux-parent</name>
+  <description>POM parent of all dependent testflux projects</description>
 
-  <modules>
-    <module>../testflux-master</module>
-    <module>../testflux-drools</module>
-  </modules>
+  <inceptionYear>2010</inceptionYear>
+  <developers>
+    <developer>
+      <name>Ansgar Konermann</name>
+      <email>ansgar.konermann@googlemail.com</email>
+      <url>http://passion.forco.de/</url>
+    </developer>
+  </developers>
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+    </license>
+  </licenses>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-dependency-plugin</artifactId>
+          <version>2.1</version>
+          <configuration>
+            <failBuild>true</failBuild>
+            <failOnWarning>true</failOnWarning>
+            <artifactItems />
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <configuration>
+            <source>1.6</source>
+            <target>1.6</target>
+            <encoding>utf-8</encoding>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>2.4.3</version>
+          <configuration>
+            <encoding>utf-8</encoding>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-release-plugin</artifactId>
+          <version>2.1</version>
+          <configuration>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-scm-plugin</artifactId>
+          <version>1.4</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+
+  <scm>
+    <connection>scm:git:git@github.com:ansgarkonermann/testflux.git</connection>
+    <developerConnection>scm:git:git@github.com:ansgarkonermann/testflux.git</developerConnection>
+  </scm>
+
+  <distributionManagement>
+    <downloadUrl>http://lightful.de/mvnrepo/public/releases</downloadUrl>
+    <repository>
+      <uniqueVersion>false</uniqueVersion>
+      <id>de.lightful.releases</id>
+      <name>Public Release Repository on lightful.de</name>
+      <url>scp://lightful.de/mvnrepo/public/releases</url>
+      <layout>default</layout>
+    </repository>
+    <snapshotRepository>
+      <uniqueVersion>false</uniqueVersion>
+      <id>de.lightful.snapshots</id>
+      <name>Public Snapshot Repository on lightful.de</name>
+      <url>scp://lightful.de/mvnrepo/public/snapshots</url>
+      <layout>default</layout>
+    </snapshotRepository>
+  </distributionManagement>
 
 </project>

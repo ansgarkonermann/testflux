@@ -22,7 +22,7 @@
   <groupId>de.lightful.testflux</groupId>
   <artifactId>testflux-master</artifactId>
   <version>0.1-SNAPSHOT</version>
-  <packaging>jar</packaging>
+  <packaging>pom</packaging>
 
   <name>testflux-master</name>
   <description>Dependency configuration for all testflux submodules</description>

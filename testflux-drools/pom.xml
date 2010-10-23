@@ -27,14 +27,117 @@
   <name>testflux-drools</name>
   <description>Test library for TestNG-based Drools rule tests</description>
 
-  <parent>
-    <groupId>de.lightful.testflux</groupId>
-    <artifactId>testflux-parent</artifactId>
-    <version>0.1-SNAPSHOT</version>
-  </parent>
+  <inceptionYear>2010</inceptionYear>
+  <developers>
+    <developer>
+      <name>Ansgar Konermann</name>
+      <email>ansgar.konermann@googlemail.com</email>
+      <url>http://passion.forco.de/</url>
+    </developer>
+  </developers>
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+    </license>
+  </licenses>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+    <drools.group>org.drools</drools.group>
+    <drools.version>5.1.1</drools.version>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.testng</groupId>
+      <artifactId>testng</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.testng</groupId>
+      <artifactId>testng</artifactId>
+      <version>5.14.1</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>${drools.group}</groupId>
+      <artifactId>drools-compiler</artifactId>
+      <version>${drools.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>${drools.group}</groupId>
+      <artifactId>drools-api</artifactId>
+      <version>${drools.version}</version>
+      <scope>compile</scope>
+    </dependency>
+  </dependencies>
+
 
   <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-dependency-plugin</artifactId>
+          <version>2.1</version>
+          <executions>
+            <execution>
+              <id>verify-dependencies</id>
+              <phase>verify</phase>
+              <goals>
+                <goal>analyze-only</goal>
+                <goal>analyze-dep-mgt</goal>
+              </goals>
+              <configuration>
+                <failOnWarning>true</failOnWarning>
+                <failBuild>true</failBuild>
+                <verbose>true</verbose>
+                <ignoreDirect>false</ignoreDirect>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <configuration>
+            <source>1.6</source>
+            <target>1.6</target>
+            <encoding>utf-8</encoding>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>2.4.3</version>
+          <configuration>
+            <encoding>utf-8</encoding>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-release-plugin</artifactId>
+          <version>2.1</version>
+          <configuration>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-scm-plugin</artifactId>
+          <version>1.4</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+
     <plugins>
+      <plugin>
+        <artifactId>maven-release-plugin</artifactId>
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-dependency-plugin</artifactId>
@@ -55,27 +158,31 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-scm-plugin</artifactId>
       </plugin>
+
     </plugins>
   </build>
 
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>de.lightful.testflux</groupId>
-        <artifactId>testflux-master</artifactId>
-        <version>0.1-SNAPSHOT</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
+  <scm>
+    <connection>scm:git:git@github.com:ansgarkonermann/testflux.git</connection>
+    <developerConnection>scm:git:git@github.com:ansgarkonermann/testflux.git</developerConnection>
+  </scm>
 
-  <dependencies>
-    <dependency>
-      <groupId>org.testng</groupId>
-      <artifactId>testng</artifactId>
-      <version>5.12.1</version>
-    </dependency>
-  </dependencies>
+  <distributionManagement>
+    <downloadUrl>http://lightful.de/mvnrepo/public/releases</downloadUrl>
+    <repository>
+      <uniqueVersion>false</uniqueVersion>
+      <id>de.lightful.releases</id>
+      <name>Public Release Repository on lightful.de</name>
+      <url>scp://lightful.de/mvnrepo/public/releases</url>
+      <layout>default</layout>
+    </repository>
+    <snapshotRepository>
+      <uniqueVersion>false</uniqueVersion>
+      <id>de.lightful.snapshots</id>
+      <name>Public Snapshot Repository on lightful.de</name>
+      <url>scp://lightful.de/mvnrepo/public/snapshots</url>
+      <layout>default</layout>
+    </snapshotRepository>
+  </distributionManagement>
 
 </project>

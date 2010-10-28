@@ -1,0 +1,9 @@
+package de.lightful.testflux.drools.package_one;
+
+rule "dummy rule one"
+when
+
+then
+
+end
+

@@ -28,11 +28,8 @@ import org.drools.io.ResourceFactory;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
-import org.testng.SkipException;
-import org.testng.annotations.NoInjection;
 
 import java.io.File;
-import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -41,14 +38,17 @@ import java.util.List;
 
 public class DroolsRuleTestListener implements ITestListener {
 
+  private static Logger log = Logger.getLogger(DroolsRuleTestListener.class);
+
+  private ThreadLocal<ITestResult> testResult = new ThreadLocal<ITestResult>();
+
   public DroolsRuleTestListener() {
     log.debug("Creating new instance of " + this.getClass().getName() + ".");
   }
 
-  private static Logger log = Logger.getLogger(DroolsRuleTestListener.class);
-
   @Override
   public void onTestStart(ITestResult result) {
+    testResult.set(result);
     final Class<?> realTestClass = obtainJavaTestClass(result);
     final Method realTestMethod = obtainJavaTestMethod(result);
 
@@ -72,7 +72,7 @@ public class DroolsRuleTestListener implements ITestListener {
       matchingField.set(testInstance, knowledgeBaseForMethod);
     }
     catch (IllegalAccessException iae) {
-      throw new SkipException("Error injecting KnowledgeBase into " + result.getTestClass().getName() + "." + matchingField.getName());
+      throw new TestFluxException("Error injecting KnowledgeBase into " + result.getTestClass().getName() + "." + matchingField.getName());
     }
   }
 
@@ -117,8 +117,8 @@ public class DroolsRuleTestListener implements ITestListener {
     boolean isForIndividualFile = isValueAvailable(ruleSource.file());
     boolean conflict = isForDirectory && isForIndividualFile;
     if (conflict) {
-      log.error("@" + RuleSource.class.getSimpleName() + " cannot be used to specify both directory '" + ruleSource.directory() + "'" +
-                " and file '" + ruleSource.file() + "' at the same time.");
+      throw new TestFluxException("@" + RuleSource.class.getSimpleName() + " cannot be used to specify both directory '" + ruleSource.directory() + "'" +
+                                  " and file '" + ruleSource.file() + "' at the same time.");
     }
 
     if (isForDirectory) {
@@ -130,11 +130,11 @@ public class DroolsRuleTestListener implements ITestListener {
   }
 
   private void addAllFilesFromDirectory(KnowledgeBuilder knowledgeBuilder, File directory) {
-    if ( ! directory.exists()) {
-      throw new SkipException("Directory " + directory.getAbsolutePath() + " given by @" + RuleSource.class.getSimpleName() + " must exist (but does not).");
+    if (!directory.exists()) {
+      throw new TestFluxException("Directory " + directory.getAbsolutePath() + " given by @" + RuleSource.class.getSimpleName() + " must exist (but does not).");
     }
-    if ( ! directory.isDirectory() ) {
-      throw new SkipException("Directory " + directory.getAbsolutePath() + " given by @" + RuleSource.class.getSimpleName() + " must denote a directory (but does not).");
+    if (!directory.isDirectory()) {
+      throw new TestFluxException("Directory " + directory.getAbsolutePath() + " given by @" + RuleSource.class.getSimpleName() + " must denote a directory (but does not).");
     }
 
     Iterator<File> fileIterator = null;
@@ -142,7 +142,7 @@ public class DroolsRuleTestListener implements ITestListener {
       fileIterator = FileUtils.iterateFiles(directory, new String[] {"drl"}, false);
     }
     catch (Throwable t) {
-      log.error("Caught " + t.getClass().getSimpleName() + ": " + t.getMessage(), t);
+      throw new TestFluxException("Caught " + t.getClass().getSimpleName() + ": " + t.getMessage());
     }
 
     for (File file : IterableAdapter.makeFrom(fileIterator)) {
@@ -154,14 +154,19 @@ public class DroolsRuleTestListener implements ITestListener {
     if (!file.exists()) {
       handleFileDoesNotExist(file);
     }
-    knowledgeBuilder.add(ResourceFactory.newFileResource(file), ResourceType.DRL);
+    try {
+      knowledgeBuilder.add(ResourceFactory.newFileResource(file), ResourceType.DRL);
+    }
+    catch (Throwable t) {
+      throw new TestFluxException("Exception occurred while adding file " + file.getAbsolutePath() + " to knowledge base: " + t.getMessage());
+    }
     if (knowledgeBuilder.hasErrors()) {
       handleKnowledgeBuilderErrors(knowledgeBuilder);
     }
   }
 
   private void handleFileDoesNotExist(File file) {
-    throw new RuntimeException(new IOException("File " + file.getAbsolutePath() + " not found, although given by @" + RuleSource.class.getSimpleName() + " annotation"));
+    throw new TestFluxException("File " + file.getAbsolutePath() + " not found, although given by @" + RuleSource.class.getSimpleName() + " annotation");
   }
 
   private void handleKnowledgeBuilderErrors(KnowledgeBuilder knowledgeBuilder) {
@@ -173,7 +178,7 @@ public class DroolsRuleTestListener implements ITestListener {
       builder.append("]:");
       builder.append(knowledgeBuilderError.getMessage());
     }
-    throw new RuntimeException(builder.toString());
+    throw new TestFluxException(builder.toString());
   }
 
   private void appendLinesTo(int[] errorLines, StringBuilder appendToMe) {

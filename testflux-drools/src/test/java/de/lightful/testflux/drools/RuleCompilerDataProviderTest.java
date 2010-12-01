@@ -21,7 +21,6 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import static org.fest.assertions.Assertions.assertThat;
-import static org.fest.assertions.Fail.fail;
 
 @RulesBaseDirectory("src/test/rules")
 @CompileRules(
@@ -32,12 +31,13 @@ import static org.fest.assertions.Fail.fail;
         @RuleSource(file = "another-directory/rule-file-two.drl")
     }
 )
-@Test(invocationCount = 100)
+@Test
+@Listeners(DroolsRuleTestListener.class)
 public class RuleCompilerDataProviderTest {
 
   private KnowledgeBase knowledgeBase;
 
-  public void knowledge_base_gets_injected_by_listener() {
+  public void test_knowledge_base_gets_injected_by_listener() {
     assertThat(knowledgeBase).as("Injected KnowledgeBase").isNotNull();
   }
 

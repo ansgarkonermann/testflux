@@ -1,0 +1,12 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="TestFlux Suite">
+
+  <parameter name="rulesRootDirectory" value="/home/ansgar/git-repositories/testflux.git/testflux-drools" />
+
+  <test name="RuleCompilerDataProviderTest">
+    <packages>
+      <package name="de.lightful.testflux.drools.*" />
+    </packages>
+  </test>
+
+</suite>

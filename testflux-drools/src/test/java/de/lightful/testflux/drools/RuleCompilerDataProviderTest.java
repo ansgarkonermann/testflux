@@ -16,6 +16,7 @@
 
 package de.lightful.testflux.drools;
 
+import com.google.inject.Inject;
 import org.drools.KnowledgeBase;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
@@ -35,10 +36,15 @@ import static org.fest.assertions.Assertions.assertThat;
 @Listeners(DroolsRuleTestListener.class)
 public class RuleCompilerDataProviderTest {
 
+  @Inject
   private KnowledgeBase knowledgeBase;
 
   public void test_knowledge_base_gets_injected_by_listener() {
     assertThat(knowledgeBase).as("Injected KnowledgeBase").isNotNull();
   }
 
+  @Test
+  public void test_knowledge_base_contains_nonzero_number_of_packages() {
+    assertThat(knowledgeBase.getKnowledgePackages().size()).isGreaterThan(0);
+  }
 }
